@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import express from "express"; // Avval terminalda: npm install express buyrug'ini bering
+import express, { text } from "express"; // Avval terminalda: npm install express buyrug'ini bering
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -146,6 +146,12 @@ const getChannelMarkup = () => ({
     [
       {
         text: "➕ 2-Kanalga qo'shilish",
+        url: "https://t.me/ozbelaetganide_1",
+      },
+    ],
+    [
+      {
+        text: "➕ 3-Kanalga qo'shilish",
         url: "https://t.me/patrickstarsrobot?start=907402803",
       },
     ],
