@@ -143,6 +143,12 @@ const getChannelMarkup = () => ({
         url: "https://t.me/+o4sHFo9rzkZlNjgy",
       },
     ],
+       [
+      {
+        text: "➕ 2-Kanalga qo'shilish",
+        url: "https://t.me/ozbelaetganide_1",
+      },
+    ],
     [
       {
         text: "➕ 3-Kanalga qo'shilish",
@@ -251,4 +257,5 @@ bot.on("callback_query", async (query) => {
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
 console.log("🔥 Bot barcha URL'lar bilan ishga tushdi!");
+
 
