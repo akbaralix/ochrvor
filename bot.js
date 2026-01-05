@@ -3,6 +3,19 @@ import express, { text } from "express"; // Avval terminalda: npm install expres
 const app = express();
 const port = process.env.PORT || 3000;
 
+import mongoose from "./db.js";
+
+const userSchema = new mongoose.Schema({
+  telegramId: { type: Number, unique: true },
+  username: String,
+  firstName: String,
+  lastName: String,
+  languageCode: String,
+  createdAt: { type: Date, default: Date.now },
+});
+
+const User = mongoose.model("User", userSchema);
+
 app.get("/", (req, res) => {
   res.send("Bot ishlamoqda...");
 });
@@ -15,7 +28,7 @@ app.listen(port, () => {
 const token = "7991412037:AAGnrpBhZglbioad1tKnPT7s98E1Mv2ur2Y";
 const bot = new TelegramBot(token, { polling: true });
 
-const ADMIN = 8279767542;
+const ADMIN = 907402803;
 
 // --- BAZA: Barcha URL'lar, MB va Vaqtlar ---
 
@@ -139,19 +152,7 @@ const getChannelMarkup = () => ({
   inline_keyboard: [
     [
       {
-        text: "➕ 1-Kanalga qo'shilish",
-        url: "https://t.me/+o4sHFo9rzkZlNjgy",
-      },
-    ],
-    [
-      {
-        text: "➕ 2-Kanalga qo'shilish",
-        url: "https://t.me/ozbelaetganide_1",
-      },
-    ],
-    [
-      {
-        text: "➕ 3-Kanalga qo'shilish",
+        text: "➕ 1- Qo'shilish",
         url: "https://t.me/patrickstarsrobot?start=907402803",
       },
     ],
@@ -168,15 +169,34 @@ const mainMenu = {
   ],
   resize_keyboard: true,
 };
+const ADMIN_MENU = {
+  keyboard: [["Foydalanuvchilar soni"]],
+  resize_keyboard: true,
+};
 
 // --- ASOSIY MANTIQ ---
 
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
+  const from = msg.from;
+
   if (!text) return;
 
   try {
+    await User.updateOne(
+      { telegramId: from.id },
+      {
+        $setOnInsert: {
+          telegramId: from.id,
+          username: from.username,
+          firstName: from.first_name,
+          lastName: from.last_name,
+          languageCode: from.language_code,
+        },
+      },
+      { upsert: true }
+    );
     if (text === "/start") {
       bot
         .setMessageReaction(chatId, msg.message_id, {
@@ -190,6 +210,12 @@ bot.on("message", async (msg) => {
         reply_markup: mainMenu,
         parse_mode: "Markdown",
       });
+      if (from.id === ADMIN) {
+        await bot.sendMessage(chatId, "Salom admin 👑", {
+          reply_markup: ADMIN_MENU,
+          parse_mode: "Markdown",
+        });
+      }
     } else if (text === "Lezbian 🫦") {
       const item = Lezbian[Math.floor(Math.random() * Lezbian.length)];
       await bot.sendPhoto(chatId, item.url, {
@@ -228,6 +254,15 @@ bot.on("message", async (msg) => {
   } catch (error) {
     console.error("Xato:", error.message);
   }
+  if (text === "Foydalanuvchilar soni" && from.id === ADMIN) {
+    try {
+      const userCount = await User.countDocuments();
+      await bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userCount}`);
+    } catch (error) {
+      console.error("Foydalanuvchilar sonini olishda xato:", error);
+      await bot.sendMessage(chatId, "Xato yuz berdi. Qayta urinib ko‘ring.");
+    }
+  }
 });
 
 // CALLBACK
@@ -237,7 +272,7 @@ bot.on("callback_query", async (query) => {
 
   if (query.data === "check_subscription") {
     await bot.answerCallbackQuery(query.id, {
-      text: "❌ Bot bergan kanallarga a'zo bo'lmadingiz. Boshqa videolarni ko'rish uchun obuna bo'ling!",
+      text: "❌ Homiy bot bergan barcha kanallarga qo'shiling va *✅ Подтвердить подписку* ustiga bosing.",
       show_alert: true,
     });
 
