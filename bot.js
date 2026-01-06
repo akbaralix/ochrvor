@@ -2,9 +2,11 @@ import TelegramBot from "node-telegram-bot-api";
 import express from "express";
 import mongoose from "./db.js";
 import mainMenu from "./menyu-buttons.js";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
+// --- DATABASE SCHEMA ---
 const userSchema = new mongoose.Schema({
   telegramId: { type: Number, unique: true },
   username: String,
@@ -17,6 +19,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+// --- SERVER ---
 app.get("/", (req, res) => {
   res.send("Bot ishlamoqda...");
 });
@@ -25,14 +28,12 @@ app.listen(port, () => {
   console.log(`Server ${port}-portda ishga tushdi!`);
 });
 
-// TOKEN
+// --- BOT CONFIG ---
 const mybtoko = "8318040012:AAFmUQPFJLZwJQpC0I1axuLWRi95M2INLbQ";
 const bot = new TelegramBot(mybtoko, { polling: true });
-
 const ADMIN = 907402803;
 
-// --- BAZA: Barcha URL'lar, MB va Vaqtlar ---
-
+// --- DATA BAZA ---
 const randomGrils = [
   "https://t.me/analitika_pornkhabinri/16",
   "https://t.me/dianaridervip/34",
@@ -187,7 +188,6 @@ const randomvideos = [
 ];
 
 // --- MARKUP ---
-
 const getChannelMarkup = () => ({
   inline_keyboard: [
     [
@@ -208,123 +208,114 @@ const ADMIN_MENU = {
   resize_keyboard: true,
 };
 
-// --- ASOSIY MANTIQ ---
-
+// --- LOGIC ---
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
   const from = msg.from;
 
-  if (!text) return;
+  if (!text && !msg.photo && !msg.video) return;
 
   try {
-    await User.updateOne(
+    // 1. Userni bazada saqlash/yangilash
+    const user = await User.findOneAndUpdate(
       { telegramId: from.id },
       {
-        $setOnInsert: {
-          telegramId: from.id,
-          username: from.username,
-          firstName: from.first_name,
-          lastName: from.last_name,
-          languageCode: from.language_code,
-        },
+        username: from.username,
+        firstName: from.first_name,
+        lastName: from.last_name,
+        languageCode: from.language_code,
       },
-      { upsert: true }
+      { upsert: true, new: true }
     );
-    // Foydalanuvchini bazadan olish (Stepni tekshirish uchun)
-    const currentUser = await User.findOne({ telegramId: from.id });
 
-    // Agar Admin xabar yuborish bosqichida bo'lsa
-    if (
-      currentUser &&
-      currentUser.step === "admin_send_post" &&
-      from.id === ADMIN
-    ) {
-      if (text === "/start") {
-        // Stepni tozalash (MUHIM!)
-        await User.updateOne({ telegramId: from.id }, { step: "none" });
+    // 2. /START BUYRUG'I (Hamisha hamma narsadan ustun)
+    if (text === "/start") {
+      await User.updateOne({ telegramId: from.id }, { step: "none" });
 
-        bot
-          .setMessageReaction(chatId, msg.message_id, {
-            reaction: [{ type: "emoji", emoji: "🍌" }],
-          })
-          .catch(() => {});
+      await bot
+        .setMessageReaction(chatId, msg.message_id, {
+          reaction: [{ type: "emoji", emoji: "🍌" }],
+        })
+        .catch(() => {});
 
-        const randomStartImg =
-          randomGrils[Math.floor(Math.random() * randomGrils.length)];
-        await bot.sendPhoto(chatId, randomStartImg, {
-          caption: `*Salom, ${msg.from.first_name}* 👋\n\n🔞 *Kategoriyani tanlang va videolarni to'g'ridan-to'g'ri ko'ring.*`,
-          reply_markup: mainMenu,
-          parse_mode: "Markdown",
+      const randomStartImg =
+        randomGrils[Math.floor(Math.random() * randomGrils.length)];
+      await bot.sendPhoto(chatId, randomStartImg, {
+        caption: `*Salom, ${from.first_name}* 👋\n\n*🔞 Kategoriyani tanlang va videolarni to'g'ridan-to'g'ri ko'ring.
+
+👁 Hozir botdan 5,834 kishi foydalanmoqda....*`,
+        reply_markup: mainMenu,
+        parse_mode: "Markdown",
+      });
+
+      if (from.id === ADMIN) {
+        await bot.sendMessage(chatId, "Salom admin 👑", {
+          reply_markup: ADMIN_MENU,
         });
-
-        if (from.id === ADMIN) {
-          await bot.sendMessage(chatId, "Salom admin 👑", {
-            reply_markup: ADMIN_MENU,
-          });
-        }
-        return; // SHU YERGA RETURN QO'YING
-      } else {
-        const allUsers = await User.find();
-        let count = 0;
-
-        await bot.sendMessage(chatId, `Xabar yuborish boshlandi... 🚀`);
-
-        for (const user of allUsers) {
-          try {
-            await bot.copyMessage(user.telegramId, chatId, msg.message_id);
-            count++;
-          } catch (e) {
-            // bazadan bloklagan odamni ochirish
-            await User.deleteOne({ telegramId: user.telegramId });
-          }
-        }
-
-        await User.updateOne({ telegramId: from.id }, { step: "none" }); // Stepni tozalash
-        return bot.sendMessage(
-          chatId,
-          `Xabar ${count} ta foydalanuvchiga muvaffaqiyatli yuborildi! ✅`
-        );
       }
-    } else if (text === "Lezbian 🫦") {
+      return;
+    }
+
+    // 3. ADMIN XABAR YUBORISH BOSQICHI
+    if (user.step === "admin_send_post" && from.id === ADMIN) {
+      const allUsers = await User.find();
+      let count = 0;
+      let blockedCount = 0;
+
+      await bot.sendMessage(chatId, `Xabar yuborish boshlandi... 🚀`);
+
+      for (const targetUser of allUsers) {
+        try {
+          await bot.copyMessage(targetUser.telegramId, chatId, msg.message_id);
+          count++;
+        } catch (e) {
+          blockedCount++;
+          await User.deleteOne({ telegramId: targetUser.telegramId });
+        }
+      }
+
+      await User.updateOne({ telegramId: from.id }, { step: "none" });
+      return bot.sendMessage(
+        chatId,
+        `✅ Xabar yuborildi: ${count} ta\n🗑 Bloklaganlar o'chirildi: ${blockedCount} ta`
+      );
+    }
+
+    // 4. MENYU TUGMALARI
+    if (text === "Lezbian 🫦") {
       const item = Lezbian[Math.floor(Math.random() * Lezbian.length)];
-      await bot.sendPhoto(chatId, item.url, {
-        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+      return bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
         reply_markup: getChannelMarkup(),
         parse_mode: "Markdown",
       });
-    } else if (text === "🇺🇿 Uzbekcha seks") {
+    }
+
+    if (text === "🇺🇿 Uzbekcha seks") {
       const item = Uzbekcha[Math.floor(Math.random() * Uzbekcha.length)];
-      await bot.sendPhoto(chatId, item.url, {
-        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+      return bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
         reply_markup: getChannelMarkup(),
         parse_mode: "Markdown",
       });
-    } else if (text === "🇷🇺 Ruscha") {
+    }
+
+    if (
+      text === "🇷🇺 Ruscha" ||
+      text === "🇺🇸 Inglizcha" ||
+      text === "🔥 Top Videolar"
+    ) {
       const item =
         randomvideos[Math.floor(Math.random() * randomvideos.length)];
-      await bot.sendPhoto(chatId, item.url, {
-        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+      return bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
         reply_markup: getChannelMarkup(),
         parse_mode: "Markdown",
       });
-    } else if (text === "🇺🇸 Inglizcha") {
-      const item =
-        randomvideos[Math.floor(Math.random() * randomvideos.length)];
-      await bot.sendPhoto(chatId, item.url, {
-        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
-        reply_markup: getChannelMarkup(),
-        parse_mode: "Markdown",
-      });
-    } else if (text === "🔥 Top Videolar") {
-      const item =
-        randomvideos[Math.floor(Math.random() * randomvideos.length)];
-      await bot.sendPhoto(chatId, item.url, {
-        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
-        reply_markup: getChannelMarkup(),
-        parse_mode: "Markdown",
-      });
-    } else if (text === "Random 🎲") {
+    }
+
+    if (text === "Random 🎲") {
       const loadingMsg = await bot.sendMessage(
         chatId,
         "🔍 *Video bazadan qidirilmoqda...*",
@@ -332,55 +323,61 @@ bot.on("message", async (msg) => {
       );
       setTimeout(async () => {
         try {
-          if (loadingMsg)
-            await bot.deleteMessage(chatId, loadingMsg.message_id);
+          await bot
+            .deleteMessage(chatId, loadingMsg.message_id)
+            .catch(() => {});
           const item =
             randomvideos[Math.floor(Math.random() * randomvideos.length)];
           await bot.sendPhoto(chatId, item.url, {
-            caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+            caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
             reply_markup: getChannelMarkup(),
             parse_mode: "Markdown",
           });
         } catch (e) {}
       }, 1500);
-    } else if (text === "👧 Detski sex") {
+      return;
+    }
+
+    if (text === "👧 Detski sex") {
       const item = Detiski[Math.floor(Math.random() * Detiski.length)];
-      await bot.sendPhoto(chatId, item.url, {
-        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+      return bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
         reply_markup: getChannelMarkup(),
         parse_mode: "Markdown",
       });
-    } else {
-      if (from.id !== ADMIN) {
-        await bot.sendMessage(chatId, "Iltimos menyudan tanlang");
+    }
+
+    // 5. ADMIN TUGMALARI
+    if (from.id === ADMIN) {
+      if (text === "Foydalanuvchilar soni") {
+        const userCount = await User.countDocuments();
+        return bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userCount}`);
       }
+      if (text === "📤 Habar yuborish") {
+        await User.updateOne(
+          { telegramId: from.id },
+          { step: "admin_send_post" }
+        );
+        return bot.sendMessage(
+          chatId,
+          "Yubormoqchi bo‘lgan habaringizni yuboring ✍️ (Rasm, video yoki matn)\n\nBekor qilish uchun /start bosing."
+        );
+      }
+      if (text === "➕ Kanal qoshish") {
+        return bot.sendMessage(chatId, "Kanal linkini yuboring 🔗");
+      }
+    }
+
+    // Hech qaysi shartga tushmasa
+    if (from.id !== ADMIN) {
+      await bot.sendMessage(chatId, "Iltimos menyudan tanlang");
     }
   } catch (error) {
     console.error("Xato:", error.message);
-  } // ADMIN buyruqlari ENG YUQORIDA
-  if (from.id === ADMIN) {
-    if (text === "Foydalanuvchilar soni") {
-      const userCount = await User.countDocuments();
-      return bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userCount}`);
-    }
-    if (text === "📤 Habar yuborish") {
-      await User.updateOne(
-        { telegramId: from.id },
-        { step: "admin_send_post" }
-      ); // Stepni yangilash
-      return bot.sendMessage(
-        chatId,
-        "Yubormoqchi bo‘lgan habaringizni kiriting ✍️\n\nBekor qilish uchun /start bosing."
-      );
-    }
-
-    if (text === "➕ Kanal qoshish") {
-      return bot.sendMessage(chatId, "Kanal linkini yuboring 🔗");
-    }
   }
 });
 
-// CALLBACK
+// CALLBACK QUERY
 bot.on("callback_query", async (query) => {
   const chatId = query.message.chat.id;
   const messageId = query.message.message_id;
@@ -406,5 +403,4 @@ bot.on("callback_query", async (query) => {
 });
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
-console.log("🔥 Bot barcha URL'lar bilan ishga tushdi!");
-
+console.log("🔥 Bot barcha URL'lar bilan xatosiz ishga tushdi!");
