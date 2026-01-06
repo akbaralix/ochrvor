@@ -1,9 +1,9 @@
 import TelegramBot from "node-telegram-bot-api";
-import express, { text } from "express"; // Avval terminalda: npm install express buyrug'ini bering
+import express from "express";
+import mongoose from "./db.js";
+import mainMenu from "./menyu-buttons.js";
 const app = express();
 const port = process.env.PORT || 3000;
-
-import mongoose from "./db.js";
 
 const userSchema = new mongoose.Schema({
   telegramId: { type: Number, unique: true },
@@ -25,8 +25,8 @@ app.listen(port, () => {
 });
 
 // TOKEN
-const token = "7991412037:AAGnrpBhZglbioad1tKnPT7s98E1Mv2ur2Y";
-const bot = new TelegramBot(token, { polling: true });
+const mybtoko = "8318040012:AAFmUQPFJLZwJQpC0I1axuLWRi95M2INLbQ";
+const bot = new TelegramBot(mybtoko, { polling: true });
 
 const ADMIN = 907402803;
 
@@ -44,37 +44,37 @@ const Uzbekcha = [
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuWrd5QEFrEHLKmp9t8Kti8uf93bhcdTM-lg&s",
     mb: "42.5",
     time: "04:12",
-    korildi: 2642,
+    korildi: 3542,
   },
   {
     url: "https://avatars.mds.yandex.net/get-vthumb/3920277/5724424c3c21eeafd7d4992e27c44d43/800x450",
     mb: "115.0",
     time: "11:45",
-    korildi: 1542,
+    korildi: 2573,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKiztCBe42uhfnw6oUbOKRMl0IFMR2400qEg&s",
     mb: "30.2",
     time: "03:10",
-    korildi: 543,
+    korildi: 1634,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTk5PllP6t-ewrdYAOJ_pgaYiD2crKGjZmw&s",
     mb: "67.8",
     time: "07:20",
-    korildi: 678,
+    korildi: 1539,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-WxSokwcWq4o6P5QehgaVVjtb47ifyf_mg&s",
     mb: "89.1",
     time: "09:34",
-    korildi: 3221,
+    korildi: 2642,
   },
   {
     url: "https://img.telemetr.io/c/29eLME/5211226039945128241?ty=l",
     mb: "140.5",
     time: "14:50",
-    korildi: 1231,
+    korildi: 3272,
   },
 ];
 
@@ -83,67 +83,67 @@ const Lezbian = [
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE7HWsmv0cNimngBPwvbZFPYBHldipBf49kQ&s",
     mb: "55.3",
     time: "05:40",
-    korildi: 521,
+    korildi: 2842,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBFOh66EJ-u4sn3jEkIkstg2QU4nVnn1Ikjg&s",
     mb: "48.2",
     time: "04:55",
-    korildi: 2411,
+    korildi: 1366,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9QW82wGF5Q6bJluNz2tdxu0yRO1o5hofQ--fw&s",
     mb: "72.4",
     time: "08:12",
-    korildi: 3411,
+    korildi: 3799,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE5NO102V1JP2563tabAyfb-JmTcsrkbd3QQ&s",
     mb: "95.0",
     time: "10:05",
-    korildi: 3544,
+    korildi: 3588,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0YMWfGFsNe_DoBf5PQmJKMLsj6Wt6MOnJOQ&s",
     mb: "110.6",
     time: "12:30",
-    korildi: 2347,
+    korildi: 2782,
   },
   {
     url: "https://ei.phncdn.com/videos/202402/01/447460351/original/(m=qXVP4NZbeGNdHgaaaa)(mh=C7F9EDVSSm8pcvPm)0.jpg",
     mb: "156.2",
     time: "18:20",
-    korildi: 1655,
+    korildi: 2351,
   },
   {
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGdVDyW2bVKEtYfJDK_IMUe3ny89Xc669LCw&s",
     mb: "63.7",
     time: "06:45",
-    korildi: 677,
+    korildi: 1442,
   },
 ];
 
 const randomvideos = [
-  { url: "https://t.me/eyrotik/213", mb: "56.1", time: "06:10", korildi: 3411 },
-  { url: "https://t.me/eyrotik/218", mb: "34.2", time: "03:50", korildi: 1341 },
-  { url: "https://t.me/eyrotik/234", mb: "88.4", time: "09:25", korildi: 3215 },
-  { url: "https://t.me/eyrotik/209", mb: "12.5", time: "01:30", korildi: 2468 },
-  { url: "https://t.me/eyrotik/189", mb: "45.9", time: "04:55", korildi: 3211 },
-  { url: "https://t.me/eyrotik/187", mb: "77.2", time: "08:40", korildi: 1233 },
+  { url: "https://t.me/eyrotik/213", mb: "56.1", time: "06:10", korildi: 3890 },
+  { url: "https://t.me/eyrotik/218", mb: "34.2", time: "03:50", korildi: 1630 },
+  { url: "https://t.me/eyrotik/234", mb: "88.4", time: "09:25", korildi: 3752 },
+  { url: "https://t.me/eyrotik/209", mb: "12.5", time: "01:30", korildi: 2797 },
+  { url: "https://t.me/eyrotik/189", mb: "45.9", time: "04:55", korildi: 3890 },
+  { url: "https://t.me/eyrotik/187", mb: "77.2", time: "08:40", korildi: 2466 },
   {
     url: "https://t.me/eyrotik/170",
     mb: "102.3",
     time: "12:15",
     korildi: 4321,
   },
-  { url: "https://t.me/eyrotik/161", mb: "22.6", time: "02:20", korildi: 987 },
-  { url: "https://t.me/eyrotik/169", mb: "66.4", time: "07:12", korildi: 2134 },
-  { url: "https://t.me/eyrotik/151", mb: "91.8", time: "10:30", korildi: 1543 },
-  { url: "https://t.me/eyrotik/130", mb: "54.7", time: "06:05", korildi: 4322 },
-  { url: "https://t.me/eyrotik/128", mb: "39.2", time: "04:15", korildi: 2143 },
-  { url: "https://t.me/eyrotik/70", mb: "82.5", time: "09:00", korildi: 3214 },
-  { url: "https://t.me/eyrotik/34", mb: "47.3", time: "05:10", korildi: 3210 },
-  { url: "https://t.me/eyrotik/6", mb: "15.4", time: "01:55", korildi: 876 },
+  { url: "https://t.me/eyrotik/161", mb: "22.6", time: "02:20", korildi: 1567 },
+  { url: "https://t.me/eyrotik/169", mb: "66.4", time: "07:12", korildi: 2341 },
+  { url: "https://t.me/eyrotik/151", mb: "91.8", time: "10:30", korildi: 2321 },
+  { url: "https://t.me/eyrotik/130", mb: "54.7", time: "06:05", korildi: 5222 },
+  { url: "https://t.me/eyrotik/128", mb: "39.2", time: "04:15", korildi: 2533 },
+  { url: "https://t.me/eyrotik/70", mb: "82.5", time: "09:00", korildi: 3865 },
+  { url: "https://t.me/eyrotik/34", mb: "47.3", time: "05:10", korildi: 4100 },
+  { url: "https://t.me/eyrotik/6", mb: "15.4", time: "01:55", korildi: 2699 },
 ];
 
 // --- MARKUP ---
@@ -160,17 +160,11 @@ const getChannelMarkup = () => ({
   ],
 });
 
-const mainMenu = {
-  keyboard: [
-    ["🇺🇿 Uzbekcha seks"],
-    ["🇷🇺 Ruscha", "🇺🇸 Inglizcha"],
-    ["Lezbian 🫦"],
-    ["🔥 Top Videolar", "Random 🎲"],
-  ],
-  resize_keyboard: true,
-};
 const ADMIN_MENU = {
-  keyboard: [["Foydalanuvchilar soni"]],
+  keyboard: [
+    ["Foydalanuvchilar soni"],
+    ["📤 Habar yuborish", "➕ Kanal qoshish"],
+  ],
   resize_keyboard: true,
 };
 
@@ -230,8 +224,31 @@ bot.on("message", async (msg) => {
         reply_markup: getChannelMarkup(),
         parse_mode: "Markdown",
       });
-    } else {
-      // Har qanday boshqa matn yoki "Random 🎲" tugmasi uchun
+    } else if (text === "🇷🇺 Ruscha") {
+      const item =
+        randomvideos[Math.floor(Math.random() * randomvideos.length)];
+      await bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+        reply_markup: getChannelMarkup(),
+        parse_mode: "Markdown",
+      });
+    } else if (text === "🇺🇸 Inglizcha") {
+      const item =
+        randomvideos[Math.floor(Math.random() * randomvideos.length)];
+      await bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+        reply_markup: getChannelMarkup(),
+        parse_mode: "Markdown",
+      });
+    } else if (text === "🔥 Top Videolar") {
+      const item =
+        randomvideos[Math.floor(Math.random() * randomvideos.length)];
+      await bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+        reply_markup: getChannelMarkup(),
+        parse_mode: "Markdown",
+      });
+    } else if (text === "Random 🎲") {
       const loadingMsg = await bot.sendMessage(
         chatId,
         "🔍 *Video bazadan qidirilmoqda...*",
@@ -250,17 +267,29 @@ bot.on("message", async (msg) => {
           });
         } catch (e) {}
       }, 1500);
+    } else {
+      if (from.id !== ADMIN) {
+        await bot.sendMessage(chatId, "Iltimos menyudan tanlang");
+      }
     }
   } catch (error) {
     console.error("Xato:", error.message);
-  }
-  if (text === "Foydalanuvchilar soni" && from.id === ADMIN) {
-    try {
+  } // ADMIN buyruqlari ENG YUQORIDA
+  if (from.id === ADMIN) {
+    if (text === "Foydalanuvchilar soni") {
       const userCount = await User.countDocuments();
-      await bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userCount}`);
-    } catch (error) {
-      console.error("Foydalanuvchilar sonini olishda xato:", error);
-      await bot.sendMessage(chatId, "Xato yuz berdi. Qayta urinib ko‘ring.");
+      return bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userCount}`);
+    }
+
+    if (text === "📤 Habar yuborish") {
+      return bot.sendMessage(
+        chatId,
+        "Yubormoqchi bo‘lgan habaringizni kiriting ✍️"
+      );
+    }
+
+    if (text === "➕ Kanal qoshish") {
+      return bot.sendMessage(chatId, "Kanal linkini yuboring 🔗");
     }
   }
 });
