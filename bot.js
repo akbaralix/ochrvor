@@ -26,7 +26,7 @@ app.listen(port, () => {
 });
 
 // TOKEN
-const mybtoko = "7895195245:AAF-QtBrVuKOYupFieHpqNvfkB4yq62JZMk";
+const mybtoko = "8318040012:AAFmUQPFJLZwJQpC0I1axuLWRi95M2INLbQ";
 const bot = new TelegramBot(mybtoko, { polling: true });
 
 const ADMIN = 907402803;
@@ -407,3 +407,4 @@ bot.on("callback_query", async (query) => {
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
 console.log("🔥 Bot barcha URL'lar bilan ishga tushdi!");
+
