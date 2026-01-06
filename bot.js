@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   languageCode: String,
+  step: { type: String, default: "none" },
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -25,7 +26,7 @@ app.listen(port, () => {
 });
 
 // TOKEN
-const mybtoko = "8318040012:AAFmUQPFJLZwJQpC0I1axuLWRi95M2INLbQ";
+const mybtoko = "7895195245:AAF-QtBrVuKOYupFieHpqNvfkB4yq62JZMk";
 const bot = new TelegramBot(mybtoko, { polling: true });
 
 const ADMIN = 907402803;
@@ -37,6 +38,45 @@ const randomGrils = [
   "https://t.me/dianaridervip/34",
   "https://t.me/dianaridervip/27",
   "https://images-cdn.ubuy.co.in/670d207ac8fb8329e948d25e-cartel-brunette-hd-photo-hot-babe-hq.jpg",
+];
+
+const Detiski = [
+  {
+    url: "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/0c/b6/69/0cb669e9caf8f88a9022bd99406cbacc/0cb669e9caf8f88a9022bd99406cbacc.22.jpg",
+    mb: "42.5",
+    time: "04:12",
+    korildi: 3542,
+  },
+  {
+    url: "https://avatars.mds.yandex.net/i?id=82a9e70e8a7889a9858140c2a8be19a131f9234e-5205074-images-thumbs&n=13",
+    mb: "45",
+    time: "07:12",
+    korildi: 4211,
+  },
+  {
+    url: "https://avatars.mds.yandex.net/i?id=6f21148007b61d3894cf48d852014b351dc740a2-8338702-images-thumbs&n=13",
+    mb: "42.5",
+    time: "04:12",
+    korildi: 3542,
+  },
+  {
+    url: "https://avatars.mds.yandex.net/i?id=1605468c253441d0aafc625def6a53ab1a44d746-10586727-images-thumbs&n=13",
+    mb: "42.5",
+    time: "04:12",
+    korildi: 3542,
+  },
+  {
+    url: "https://avatars.mds.yandex.net/i?id=9efbf9061384557dc4e1a11ffdf3744a95debca6-5297106-images-thumbs&n=13",
+    mb: "42.5",
+    time: "04:12",
+    korildi: 3542,
+  },
+  {
+    url: "https://c8b8a8134e.mjedge.net/contents/videos_screenshots/608000/608296/preview.jpg",
+    mb: "42.5",
+    time: "04:12",
+    korildi: 3542,
+  },
 ];
 
 const Uzbekcha = [
@@ -191,24 +231,60 @@ bot.on("message", async (msg) => {
       },
       { upsert: true }
     );
-    if (text === "/start") {
-      bot
-        .setMessageReaction(chatId, msg.message_id, {
-          reaction: [{ type: "emoji", emoji: "🍌" }],
-        })
-        .catch(() => {});
-      const randomStartImg =
-        randomGrils[Math.floor(Math.random() * randomGrils.length)];
-      await bot.sendPhoto(chatId, randomStartImg, {
-        caption: `*Salom, ${msg.from.first_name}* 👋\n\n🔞 *Kategoriyani tanlang va videolarni to'g'ridan-to'g'ri ko'ring.*\n\n👁 _Hozir botdan 5,834 kishi foydalanmoqda..._`,
-        reply_markup: mainMenu,
-        parse_mode: "Markdown",
-      });
-      if (from.id === ADMIN) {
-        await bot.sendMessage(chatId, "Salom admin 👑", {
-          reply_markup: ADMIN_MENU,
+    // Foydalanuvchini bazadan olish (Stepni tekshirish uchun)
+    const currentUser = await User.findOne({ telegramId: from.id });
+
+    // Agar Admin xabar yuborish bosqichida bo'lsa
+    if (
+      currentUser &&
+      currentUser.step === "admin_send_post" &&
+      from.id === ADMIN
+    ) {
+      if (text === "/start") {
+        // Stepni tozalash (MUHIM!)
+        await User.updateOne({ telegramId: from.id }, { step: "none" });
+
+        bot
+          .setMessageReaction(chatId, msg.message_id, {
+            reaction: [{ type: "emoji", emoji: "🍌" }],
+          })
+          .catch(() => {});
+
+        const randomStartImg =
+          randomGrils[Math.floor(Math.random() * randomGrils.length)];
+        await bot.sendPhoto(chatId, randomStartImg, {
+          caption: `*Salom, ${msg.from.first_name}* 👋\n\n🔞 *Kategoriyani tanlang va videolarni to'g'ridan-to'g'ri ko'ring.*`,
+          reply_markup: mainMenu,
           parse_mode: "Markdown",
         });
+
+        if (from.id === ADMIN) {
+          await bot.sendMessage(chatId, "Salom admin 👑", {
+            reply_markup: ADMIN_MENU,
+          });
+        }
+        return; // SHU YERGA RETURN QO'YING
+      } else {
+        const allUsers = await User.find();
+        let count = 0;
+
+        await bot.sendMessage(chatId, `Xabar yuborish boshlandi... 🚀`);
+
+        for (const user of allUsers) {
+          try {
+            await bot.copyMessage(user.telegramId, chatId, msg.message_id);
+            count++;
+          } catch (e) {
+            // bazadan bloklagan odamni ochirish
+            await User.deleteOne({ telegramId: user.telegramId });
+          }
+        }
+
+        await User.updateOne({ telegramId: from.id }, { step: "none" }); // Stepni tozalash
+        return bot.sendMessage(
+          chatId,
+          `Xabar ${count} ta foydalanuvchiga muvaffaqiyatli yuborildi! ✅`
+        );
       }
     } else if (text === "Lezbian 🫦") {
       const item = Lezbian[Math.floor(Math.random() * Lezbian.length)];
@@ -267,6 +343,13 @@ bot.on("message", async (msg) => {
           });
         } catch (e) {}
       }, 1500);
+    } else if (text === "👧 Detski sex") {
+      const item = Detiski[Math.floor(Math.random() * Detiski.length)];
+      await bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_ ✅ *Tekshirish va Ko'rish* _ni bosing_`,
+        reply_markup: getChannelMarkup(),
+        parse_mode: "Markdown",
+      });
     } else {
       if (from.id !== ADMIN) {
         await bot.sendMessage(chatId, "Iltimos menyudan tanlang");
@@ -280,11 +363,14 @@ bot.on("message", async (msg) => {
       const userCount = await User.countDocuments();
       return bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userCount}`);
     }
-
     if (text === "📤 Habar yuborish") {
+      await User.updateOne(
+        { telegramId: from.id },
+        { step: "admin_send_post" }
+      ); // Stepni yangilash
       return bot.sendMessage(
         chatId,
-        "Yubormoqchi bo‘lgan habaringizni kiriting ✍️"
+        "Yubormoqchi bo‘lgan habaringizni kiriting ✍️\n\nBekor qilish uchun /start bosing."
       );
     }
 
