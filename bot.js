@@ -396,7 +396,7 @@ bot.on("callback_query", async (query) => {
 
   if (query.data === "check_subscription") {
     await bot.answerCallbackQuery(query.id, {
-      text: "❌ Homiy bot bergan barcha kanallarga qo'shiling va *✅ Подтвердить подписку* ustiga bosing.",
+      text: "❌ Homiy bot bergan barcha kanallarga qo'shiling va *Проверить подписку ✅* ustiga bosing.",
       show_alert: true,
     });
 
