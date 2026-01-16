@@ -186,6 +186,10 @@ const randomvideos = [
   { url: "https://t.me/eyrotik/34", mb: "47.3", time: "05:10", korildi: 4100 },
   { url: "https://t.me/eyrotik/6", mb: "15.4", time: "01:55", korildi: 2699 },
 ];
+const BONU = [
+  { url: "bonu.png", mb: 16.3, time: "08:10", korildi: 389 },
+  { url: "bonus.png", mb: 76.8, time: "08:10", korildi: 451 },
+];
 
 // --- MARKUP ---
 const getChannelMarkup = () => ({
@@ -344,6 +348,14 @@ bot.on("message", async (msg) => {
         caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
         reply_markup: getChannelMarkup(),
         parse_mode: "Markdown",
+      });
+    }
+    if (text === "315") {
+      const item = BONU[Math.floor(Math.random() * BONU.length)];
+      return bot.sendPhoto(chatId, item.url, {
+        caption: `✅ *Video topildi!* \n\n📹 *Fayl hajmi:* ${item.mb} MB\n⏱ *Davomiyligi:* ${item.time}\n\n👁️ Korildi: ${item.korildi}\n\n🔒 _Videoni yuklash uchun homiy kanallarga obuna bo'ling_`,
+        parse_mode: "Markdown",
+        reply_markup: getChannelMarkup(),
       });
     }
 
