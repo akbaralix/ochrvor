@@ -196,8 +196,12 @@ const getChannelMarkup = () => ({
   inline_keyboard: [
     [
       {
-        text: "➕ 1- Qo'shilish",
+        text: "➕ 1 - Qo'shilish",
         url: "https://t.me/patrickstarsrobot?start=907402803",
+      },
+       {
+        text: "➕ 2 - Qo'shilish",
+        url: "https://t.me/kinoborubot?start=1",
       },
     ],
     [{ text: "✅ Tekshirish va Ko'rish", callback_data: "check_subscription" }],
@@ -416,3 +420,4 @@ bot.on("callback_query", async (query) => {
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
 console.log("🔥 Bot barcha URL'lar bilan xatosiz ishga tushdi!");
+
