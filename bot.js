@@ -205,7 +205,7 @@ const getChannelMarkup = () => ({
       }],
 [{
         text: "➕ 3 - Qo'shilish",
-        url: "https://t.me/+oJovjML5b5QyNDk6",
+        url: "https://t.me/copywriting_blogi",
       },
     ],
     [{ text: "✅ Tekshirish va Ko'rish", callback_data: "check_subscription" }],
@@ -424,4 +424,5 @@ bot.on("callback_query", async (query) => {
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
 console.log("🔥 Bot barcha URL'lar bilan xatosiz ishga tushdi!");
+
 
