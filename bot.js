@@ -202,6 +202,9 @@ const getChannelMarkup = () => ({
        {
         text: "➕ 2 - Qo'shilish",
         url: "https://t.me/kinoborubot?start=1",
+      },{
+        text: "➕ 3 - Qo'shilish",
+        url: "https://t.me/+oJovjML5b5QyNDk6",
       },
     ],
     [{ text: "✅ Tekshirish va Ko'rish", callback_data: "check_subscription" }],
