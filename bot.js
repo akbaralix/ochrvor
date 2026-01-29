@@ -198,13 +198,7 @@ const getChannelMarkup = () => ({
       {
         text: "➕ 1 - Qo'shilish",
         url: "https://t.me/patrickstarsrobot?start=907402803",
-      }],
-    [
-      {
-        text: "➕ 2 - Qo'shilish",
-        url: "https://t.me/AdvanceStars_Bot?start=ref_907402803",
-      }
-    ],
+      }],
     [{ text: "✅ Tekshirish va Ko'rish", callback_data: "check_subscription" }],
   ],
 });
