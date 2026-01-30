@@ -2,7 +2,7 @@ const mainMenu = {
   keyboard: [
     ["🇺🇿 Uzbekcha seks"],
     ["🇷🇺 Ruscha", "🇺🇸 Inglizcha"],
-    ["🫦 Lezbian ", "👧 Detski sex"],
+    ["Lezbian 🫦", "👧 Detski sex"],
     ["🔥 Top Videolar", "Random 🎲"],
   ],
   resize_keyboard: true,
@@ -17,3 +17,4 @@ const ADMIN_MENU = {
 };
 export default mainMenu;
 export { ADMIN_MENU };
+
