@@ -31,7 +31,7 @@ app.listen(port, () => {
 // --- BOT CONFIG ---
 const mybtoko = "8318040012:AAFmUQPFJLZwJQpC0I1axuLWRi95M2INLbQ";
 const bot = new TelegramBot(mybtoko, { polling: true });
-const ADMIN = 90740280;
+const ADMIN = 907402803;
 
 // --- DATA BAZA ---
 const randomGrils = [
@@ -489,3 +489,4 @@ bot.on("callback_query", async (query) => {
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
 console.log("🔥 Bot barcha URL'lar bilan xatosiz ishga tushdi!");
+
