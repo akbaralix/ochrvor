@@ -31,31 +31,31 @@ app.listen(port, () => {
 // --- BOT CONFIG ---
 const mybtoko = "8318040012:AAFmUQPFJLZwJQpC0I1axuLWRi95M2INLbQ";
 const bot = new TelegramBot(mybtoko, { polling: true });
-const ADMIN = 907402803;
+const ADMIN = 90740280;
 
 // --- DATA BAZA ---
 const randomGrils = [
-  "https://t.me/analitika_pornkhabinri/16",
-  "https://t.me/dianaridervip/34",
-  "https://t.me/dianaridervip/27",
-  "https://images-cdn.ubuy.co.in/670d207ac8fb8329e948d25e-cartel-brunette-hd-photo-hot-babe-hq.jpg",
+  "https://rusporn.porn/thumbs/18545/thumb1.1.jpg",
+  "https://ei.phncdn.com/videos/202504/17/467407535/original/(m=qH10JG0beaSaaTbaAaaaa)(mh=uaYzqfZa_Lzbhv0Z)0.jpg",
+  "https://ic-vt-nss.xhcdn.com/a/MjNiMjNhNGEwNWZlMTE2ZDMxNzdmMWZjNDBiOGNhOTA/s(w:1280,h:720),webp/025/479/908/1280x720.17317671.jpg",
+  "https://ei.phncdn.com/videos/202302/02/424608301/original/(m=qM9U79XbeaSaaTbaAaaaa)(mh=fasbP8zV8Lru9-0I)0.jpg",
 ];
 
 const Detiski = [
   {
-    url: "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/0c/b6/69/0cb669e9caf8f88a9022bd99406cbacc/0cb669e9caf8f88a9022bd99406cbacc.22.jpg",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3L2Yy320ZM6X26ZX-NMkefqIxpmdOrRpVtA&s",
     mb: "42.5",
     time: "04:12",
     korildi: 3542,
   },
   {
-    url: "https://avatars.mds.yandex.net/i?id=82a9e70e8a7889a9858140c2a8be19a131f9234e-5205074-images-thumbs&n=13",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX736trEwEhv4mX2xFbdTtW0G7HiIUtLGNhw&s",
     mb: "45",
     time: "07:12",
     korildi: 4211,
   },
   {
-    url: "https://avatars.mds.yandex.net/i?id=6f21148007b61d3894cf48d852014b351dc740a2-8338702-images-thumbs&n=13",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSomwqJd5kr7xb3ky8eoa8qBccQ5MRZREKBbg&s",
     mb: "42.5",
     time: "04:12",
     korildi: 3542,
@@ -82,37 +82,44 @@ const Detiski = [
 
 const Uzbekcha = [
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuWrd5QEFrEHLKmp9t8Kti8uf93bhcdTM-lg&s",
+    url: "image.png",
+    mb: "42.5",
+    time: "04:12",
+    korildi: 1321,
+  },
+
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjSfYIZVh4MlF19cVgIP01wwSzsHre_xASWA&s",
     mb: "42.5",
     time: "04:12",
     korildi: 3542,
   },
   {
-    url: "https://avatars.mds.yandex.net/get-vthumb/3920277/5724424c3c21eeafd7d4992e27c44d43/800x450",
+    url: "https://trahkino.me/contents/videos_screenshots/206000/206627/preview.mp4.jpg",
     mb: "115.0",
     time: "11:45",
     korildi: 2573,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKiztCBe42uhfnw6oUbOKRMl0IFMR2400qEg&s",
+    url: "https://trahkino.me/contents/videos_screenshots/260000/260474/preview.mp4.jpg",
     mb: "30.2",
     time: "03:10",
     korildi: 1634,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTk5PllP6t-ewrdYAOJ_pgaYiD2crKGjZmw&s",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0_G_Ipt8X6p8QBzBA0cjKYIzNSOh3CDqnBA&s",
     mb: "67.8",
     time: "07:20",
     korildi: 1539,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-WxSokwcWq4o6P5QehgaVVjtb47ifyf_mg&s",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUF4veA5QN_Nvg87xWJSA4VS9x53uINL6aug&s",
     mb: "89.1",
     time: "09:34",
     korildi: 2642,
   },
   {
-    url: "https://img.telemetr.io/c/29eLME/5211226039945128241?ty=l",
+    url: "https://static8.tgstat.ru/channels/_0/ee/ee267c431a55bb6171cd881cdd9bcddc.jpg",
     mb: "140.5",
     time: "14:50",
     korildi: 3272,
@@ -121,25 +128,25 @@ const Uzbekcha = [
 
 const Lezbian = [
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE7HWsmv0cNimngBPwvbZFPYBHldipBf49kQ&s",
+    url: "https://thumbs.yasex.net/11051/thumbs.jpg",
     mb: "55.3",
     time: "05:40",
     korildi: 2842,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBFOh66EJ-u4sn3jEkIkstg2QU4nVnn1Ikjg&s",
+    url: "https://thumbs.yasex.net/10836/thumbs.jpg",
     mb: "48.2",
     time: "04:55",
     korildi: 1366,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9QW82wGF5Q6bJluNz2tdxu0yRO1o5hofQ--fw&s",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm_Pu9L2ghm91bDXi1oRgrTvxow7x1klI78A&s",
     mb: "72.4",
     time: "08:12",
     korildi: 3799,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE5NO102V1JP2563tabAyfb-JmTcsrkbd3QQ&s",
+    url: "https://thumbs.yasex.net/10866/thumbs.jpg",
     mb: "95.0",
     time: "10:05",
     korildi: 3588,
@@ -157,7 +164,7 @@ const Lezbian = [
     korildi: 2351,
   },
   {
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGdVDyW2bVKEtYfJDK_IMUe3ny89Xc669LCw&s",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlgaSU4hMeFUFdFLGMsGCvoY0ExWutFpX__g&s",
     mb: "63.7",
     time: "06:45",
     korildi: 1442,
@@ -165,22 +172,72 @@ const Lezbian = [
 ];
 
 const randomvideos = [
-  { url: "https://t.me/eyrotik/213", mb: "56.1", time: "06:10", korildi: 3890 },
-  { url: "https://t.me/eyrotik/218", mb: "34.2", time: "03:50", korildi: 1630 },
-  { url: "https://t.me/eyrotik/234", mb: "88.4", time: "09:25", korildi: 3752 },
-  { url: "https://t.me/eyrotik/209", mb: "12.5", time: "01:30", korildi: 2797 },
-  { url: "https://t.me/eyrotik/189", mb: "45.9", time: "04:55", korildi: 3890 },
-  { url: "https://t.me/eyrotik/187", mb: "77.2", time: "08:40", korildi: 2466 },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2EKwYv6Q3xkVB8aG4cutwAkJRcCC8tlyk0w&s",
+    mb: "56.1",
+    time: "06:10",
+    korildi: 3890,
+  },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq3h3swJPwIbGhw5qUtyJ6AMjC6OJVIoGV8g&s",
+    mb: "34.2",
+    time: "03:50",
+    korildi: 1630,
+  },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGpt1KyRdL_eUGfc00fQZDCgzVxs4FYH8svg&s",
+    mb: "88.4",
+    time: "09:25",
+    korildi: 3752,
+  },
+  {
+    url: "https://xxxdd.net/uploads/posts/2022-08/1661477102_1961.xxxdownload.net.jpg",
+    mb: "12.5",
+    time: "01:30",
+    korildi: 2797,
+  },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHsKoS1327AXmuXB2MEJLzsiD_fRS6eSoSyw&s",
+    mb: "45.9",
+    time: "04:55",
+    korildi: 3890,
+  },
+  {
+    url: "https://trahkino.me/contents/videos_screenshots/201000/201546/preview.mp4.jpg7",
+    mb: "77.2",
+    time: "08:40",
+    korildi: 2466,
+  },
   {
     url: "https://t.me/eyrotik/170",
     mb: "102.3",
     time: "12:15",
     korildi: 4321,
   },
-  { url: "https://t.me/eyrotik/161", mb: "22.6", time: "02:20", korildi: 1567 },
-  { url: "https://t.me/eyrotik/169", mb: "66.4", time: "07:12", korildi: 2341 },
-  { url: "https://t.me/eyrotik/151", mb: "91.8", time: "10:30", korildi: 2321 },
-  { url: "https://t.me/eyrotik/130", mb: "54.7", time: "06:05", korildi: 5222 },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ5roFjQs0iJ6JPF6n48HkUJBKhcT1HTzpyw&s",
+    mb: "22.6",
+    time: "02:20",
+    korildi: 1567,
+  },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXPQUss8kYoGy_wPYbWky8tpumRvrS-etQbw&s",
+    mb: "66.4",
+    time: "07:12",
+    korildi: 2341,
+  },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXPQUss8kYoGy_wPYbWky8tpumRvrS-etQbw&s",
+    mb: "91.8",
+    time: "10:30",
+    korildi: 2321,
+  },
+  {
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSomwqJd5kr7xb3ky8eoa8qBccQ5MRZREKBbg&s",
+    mb: "54.7",
+    time: "06:05",
+    korildi: 5222,
+  },
   { url: "https://t.me/eyrotik/128", mb: "39.2", time: "04:15", korildi: 2533 },
   { url: "https://t.me/eyrotik/70", mb: "82.5", time: "09:00", korildi: 3865 },
   { url: "https://t.me/eyrotik/34", mb: "47.3", time: "05:10", korildi: 4100 },
@@ -198,9 +255,18 @@ const getChannelMarkup = () => ({
       {
         text: "➕ 1 - Qo'shilish",
         url: "https://t.me/patrickstarsrobot?start=907402803",
-      }],
-
-    [{ text: "✅ Tekshirish va Ko'rish", callback_data: "check_subscription" }],
+      },
+      {
+        text: "➕ 2 - Qo'shilish",
+        url: "https://t.me/kinoborubot?start=1",
+      },
+    ],
+    [
+      {
+        text: "✅ Tekshirish va Ko'rish",
+        callback_data: "check_subscription",
+      },
+    ],
   ],
 });
 
@@ -230,7 +296,7 @@ bot.on("message", async (msg) => {
         lastName: from.last_name,
         languageCode: from.language_code,
       },
-      { upsert: true, new: true }
+      { upsert: true, new: true },
     );
 
     // 2. /START BUYRUG'I (Hamisha hamma narsadan ustun)
@@ -282,7 +348,7 @@ bot.on("message", async (msg) => {
       await User.updateOne({ telegramId: from.id }, { step: "none" });
       return bot.sendMessage(
         chatId,
-        `✅ Xabar yuborildi: ${count} ta\n🗑 Bloklaganlar o'chirildi: ${blockedCount} ta`
+        `✅ Xabar yuborildi: ${count} ta\n🗑 Bloklaganlar o'chirildi: ${blockedCount} ta`,
       );
     }
 
@@ -323,7 +389,7 @@ bot.on("message", async (msg) => {
       const loadingMsg = await bot.sendMessage(
         chatId,
         "🔍 *Video bazadan qidirilmoqda...*",
-        { parse_mode: "Markdown" }
+        { parse_mode: "Markdown" },
       );
       setTimeout(async () => {
         try {
@@ -368,11 +434,11 @@ bot.on("message", async (msg) => {
       if (text === "📤 Habar yuborish") {
         await User.updateOne(
           { telegramId: from.id },
-          { step: "admin_send_post" }
+          { step: "admin_send_post" },
         );
         return bot.sendMessage(
           chatId,
-          "Yubormoqchi bo‘lgan habaringizni yuboring ✍️ (Rasm, video yoki matn)\n\nBekor qilish uchun /start bosing."
+          "Yubormoqchi bo‘lgan habaringizni yuboring ✍️ (Rasm, video yoki matn)\n\nBekor qilish uchun /start bosing.",
         );
       }
       if (text === "➕ Kanal qoshish") {
@@ -382,7 +448,14 @@ bot.on("message", async (msg) => {
 
     // Hech qaysi shartga tushmasa
     if (from.id !== ADMIN) {
-      await bot.sendMessage(chatId, "Iltimos menyudan tanlang");
+      await bot.sendMessage(
+        chatId,
+        "*⚠️ Botdan foydalanishdan oldin homiy bot bergan kanallarga qoshilin.*\n\n_Barcha kanalga qoshilgandan song_ *Проверить подписку ✅* _tugmasini bosing._",
+        {
+          reply_markup: getChannelMarkup(),
+          parse_mode: "Markdown",
+        },
+      );
     }
   } catch (error) {
     console.error("Xato:", error.message);
@@ -408,7 +481,7 @@ bot.on("callback_query", async (query) => {
           message_id: messageId,
           reply_markup: getChannelMarkup(),
           parse_mode: "Markdown",
-        }
+        },
       )
       .catch(() => {});
   }
@@ -416,6 +489,3 @@ bot.on("callback_query", async (query) => {
 
 process.on("uncaughtException", (err) => console.log("Kritik xato:", err));
 console.log("🔥 Bot barcha URL'lar bilan xatosiz ishga tushdi!");
-
-
-
